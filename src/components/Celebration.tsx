@@ -31,6 +31,7 @@ interface Firework {
 }
 
 export default function Celebration() {
+  // Remova a referência não utilizada
   const [hearts, setHearts] = useState<Heart[]>([]);
   const [showMessage, setShowMessage] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
@@ -53,10 +54,6 @@ export default function Celebration() {
   
   useEffect(() => {
     setIsMounted(true);
-    
-    // Removed confetti import and function
-    
-    // Create fireworks effect with fewer elements
     const createFireworks = () => {
       const newFireworks = [];
       const colors = ['#ff3366', '#ff66b2', '#ffccdd', '#b266ff'];
@@ -78,7 +75,6 @@ export default function Celebration() {
         setShowFireworks(false);
       }, 5000);
     };
-    
     const createHearts = () => {
       const newHearts = [];
       const heartTypes = ['❤️', '💖', '💕', '💘', '✨'];
@@ -95,8 +91,6 @@ export default function Celebration() {
       }
       setHearts(newHearts);
     };
-    
-    // Create love messages that appear sequentially
     const createLoveMessages = () => {
       const newMessages: LoveMessage[] = messages.map((text, index) => ({
         id: index,
@@ -105,7 +99,6 @@ export default function Celebration() {
       }));
       setLoveMessages(newMessages);
     };
-    
     let confettiInterval: ReturnType<typeof setInterval> | null = null;
     if (isMounted) {
       // Remove confetti code and just show message directly
@@ -121,25 +114,15 @@ export default function Celebration() {
       createHearts();
       createLoveMessages();
       
-      // Change phases with increased interval
       const phaseInterval = setInterval(() => {
         setCurrentPhase(prev => (prev + 1) % 5);
-      }, 8000); // Increased from 6000 to 8000
+      }, 8000);
       
       return () => {
-        if (confettiInterval) {
-          clearInterval(confettiInterval);
-        }
         clearInterval(phaseInterval);
-        // Certifique-se de limpar todos os timeouts
-        document.querySelectorAll('canvas').forEach(canvas => {
-          const context = canvas.getContext('2d');
-          if (context) context.clearRect(0, 0, canvas.width, canvas.height);
-        });
       };
     }
-  }, [isMounted]); // Removi messages da dependência para evitar re-renderizações
-  
+  }, [isMounted, messages]); // Adicione messages como dependência
   // Get background gradient based on current phase
   const getBackgroundGradient = () => {
     const gradients = [
