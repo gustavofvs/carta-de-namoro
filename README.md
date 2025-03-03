@@ -27,6 +27,6 @@ O projeto foi desenvolvido com foco em experiência mobile-first, garantindo que
 
 1. Clone o repositório:
 ```bash
-git clone https://github.com/seu-usuario/carta-de-namoro.git
+git clone https://github.com/gustavofvs/carta-de-namoro.git
 cd carta-de-namoro
 ```
