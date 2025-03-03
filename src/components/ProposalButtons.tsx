@@ -25,14 +25,10 @@ export default function ProposalButtons({ onAccept }: { onAccept: () => void }) 
     "Tá difícil, hein?",
     "Vou facilitar pra você..."
   ];
-// Remove duplicate declaration since isMounted is already declared above
-// showHearts is already declared above, removing duplicate declaration
-// containerRef is already declared above, no need to redeclare it
   
   useEffect(() => {
     setIsMounted(true);
     return () => {
-      // Cleanup
     };
   }, []);
   
@@ -41,7 +37,6 @@ export default function ProposalButtons({ onAccept }: { onAccept: () => void }) 
       ref={containerRef}
       className="fixed inset-0 flex flex-col items-center justify-center p-4 bg-gradient-to-br from-pink-400 via-purple-300 to-indigo-400"
     >
-      {/* Seu conteúdo existente */}
     </div>
   );
 }

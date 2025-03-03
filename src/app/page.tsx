@@ -20,7 +20,6 @@ export default function Home() {
   const timelineRef = useRef<HTMLDivElement>(null);
   const controls = useAnimation();
 
-  // Enhanced memories with more details
   const allMemories = [
     {
       text: 'Nosso primeiro encontro',
@@ -81,39 +80,33 @@ export default function Home() {
   ];
 
   useEffect(() => {
-    // Initial loading stage
     const loadingTimer = setTimeout(() => {
       setStage('intro');
       
-      // Show intro content with delay for animation
       setTimeout(() => {
         setShowIntroContent(true);
       }, 500);
       
-      // Pulse animation for continue button
       controls.start({
         scale: [1, 1.05, 1],
         transition: { duration: 1.5, repeat: Infinity }
       });
       
-      // Show random quote with delay
       setTimeout(() => {
         setCurrentQuote(romanticQuotes[Math.floor(Math.random() * romanticQuotes.length)]);
         setShowQuote(true);
       }, 2000);
       
-    }, 3000); // Reduced loading time for better UX
+    }, 3000); 
 
     return () => clearTimeout(loadingTimer);
-  }, []); // Remove dependencies to ensure this only runs once
+  }, []); 
 
-  // Load memories one by one with a delay
   useEffect(() => {
     if (stage === 'memories') {
       let index = 0;
       const memoryInterval = setInterval(() => {
         if (index < allMemories.length) {
-          // Check if this index is already in the memories array before adding
           setMemories(prev => {
             if (!prev.includes(index)) {
               return [...prev, index];
@@ -122,7 +115,6 @@ export default function Home() {
           });
           index++;
           
-          // Scroll timeline to bottom
           if (timelineRef.current) {
             timelineRef.current.scrollTop = timelineRef.current.scrollHeight;
           }
@@ -140,7 +132,7 @@ export default function Home() {
   };
 
   const handleContinueToMemories = () => {
-    setMemories([]); // Reset memories when entering the memories stage
+    setMemories([]);
     setStage('memories');
   };
 
@@ -152,7 +144,6 @@ export default function Home() {
     setStage('proposal');
   };
 
-  // Conteúdo da seção Gallery (que estava faltando)
   const renderGallerySection = () => (
     <motion.div
       key="gallery"
@@ -162,7 +153,6 @@ export default function Home() {
       transition={{ duration: 0.8 }}
       className="min-h-screen bg-gradient-to-br from-pink-300 via-purple-300 to-indigo-400 p-6 flex flex-col items-center justify-center"
     >
-      {/* Conteúdo da galeria */}
       <motion.div
         initial={{ y: -30, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -177,10 +167,8 @@ export default function Home() {
         </p>
       </motion.div>
 
-      {/* Aqui você pode adicionar imagens da galeria */}
       <div className="w-full max-w-3xl bg-white/20 backdrop-blur-md rounded-xl p-6 shadow-xl z-10 mb-8">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {/* Exemplo de espaço para fotos - substitua por suas fotos reais */}
           <div className="bg-white/30 h-48 rounded-lg flex items-center justify-center">
             <p className="text-purple-700">Foto #1</p>
           </div>
@@ -212,7 +200,6 @@ export default function Home() {
         </motion.button>
       </motion.div>
 
-      {/* Decorative elements */}
       <div className="absolute inset-0 pointer-events-none">
         {Array.from({ length: 20 }).map((_, i) => (
           <motion.div
@@ -265,7 +252,6 @@ export default function Home() {
             transition={{ duration: 0.8 }}
             className="min-h-screen bg-gradient-to-br from-pink-300 via-purple-300 to-indigo-400 p-6 flex flex-col items-center justify-center relative overflow-hidden"
           >
-            {/* Animated background elements */}
             <div className="absolute inset-0">
               <div className="absolute inset-0 bg-[url('/heart-pattern.png')] opacity-5"></div>
               {Array.from({ length: 15 }).map((_, i) => (
@@ -353,7 +339,6 @@ export default function Home() {
               )}
             </AnimatePresence>
 
-            {/* Floating hearts background */}
             <div className="absolute inset-0 pointer-events-none overflow-hidden">
               {Array.from({ length: 15 }).map((_, i) => (
                 <div
@@ -412,17 +397,11 @@ export default function Home() {
                   <p className="text-purple-700">Momentos que construíram nosso amor</p>
                 </div>
               </div>
-
-              {/* Add this CSS class to your global CSS or tailwind.config.js
-                  .no-scrollbar::-webkit-scrollbar { display: none; }
-                  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; } */}
-              
               <div 
                 ref={timelineRef}
                 className="relative pl-10 border-l-2 border-pink-400 max-h-60 overflow-y-auto pr-4 py-2 no-scrollbar"
               >
                 {memories.map((memoryIndex, arrayIndex) => {
-                  // Make sure the index is valid
                   if (memoryIndex >= 0 && memoryIndex < allMemories.length) {
                     const memoryData = allMemories[memoryIndex];
                     return (
@@ -549,7 +528,6 @@ export default function Home() {
               </motion.div>
             </div>
             
-            {/* Decorative elements */}
             <div className="absolute inset-0 pointer-events-none">
               {Array.from({ length: 30 }).map((_, i) => (
                 <motion.div

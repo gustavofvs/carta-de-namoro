@@ -2,9 +2,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import Image from 'next/image';
 
-// Define the heart type
 interface Heart {
   id: number;
   left: number;
@@ -14,14 +12,12 @@ interface Heart {
   type: string;
 }
 
-// Define the message type
 interface LoveMessage {
   id: number;
   text: string;
   delay: number;
 }
 
-// Define the firework type
 interface Firework {
   id: number;
   x: number;
@@ -31,7 +27,6 @@ interface Firework {
 }
 
 export default function Celebration() {
-  // Remova a referência não utilizada
   const [hearts, setHearts] = useState<Heart[]>([]);
   const [showMessage, setShowMessage] = useState(false);
   const [isMounted, setIsMounted] = useState(false);
@@ -39,7 +34,6 @@ export default function Celebration() {
   const [loveMessages, setLoveMessages] = useState<LoveMessage[]>([]);
   const [fireworks, setFireworks] = useState<Firework[]>([]);
   const [showFireworks, setShowFireworks] = useState(false);
-  // Removed confettiCanvasRef
   const audioRef = useRef<HTMLAudioElement | null>(null);
   
   const messages = [
@@ -79,13 +73,13 @@ export default function Celebration() {
       const newHearts = [];
       const heartTypes = ['❤️', '💖', '💕', '💘', '✨'];
       
-      for (let i = 0; i < 20; i++) { // Reduced from 80 to 20
+      for (let i = 0; i < 20; i++) { 
         newHearts.push({
           id: i,
           left: Math.random() * 100,
-          size: 0.5 + Math.random() * 1.5, // Reduced max size
-          animationDuration: 5 + Math.random() * 10, // Reduced max duration
-          delay: Math.random() * 5, // Reduced max delay
+          size: 0.5 + Math.random() * 1.5, 
+          animationDuration: 5 + Math.random() * 10, 
+          delay: Math.random() * 5, 
           type: heartTypes[Math.floor(Math.random() * heartTypes.length)]
         });
       }
@@ -101,12 +95,10 @@ export default function Celebration() {
     };
     let confettiInterval: ReturnType<typeof setInterval> | null = null;
     if (isMounted) {
-      // Remove confetti code and just show message directly
       setTimeout(() => {
         setShowMessage(true);
       }, 1500);
       
-      // Show fireworks with delay
       setTimeout(() => {
         createFireworks();
       }, 3000);
@@ -122,8 +114,7 @@ export default function Celebration() {
         clearInterval(phaseInterval);
       };
     }
-  }, [isMounted, messages]); // Adicione messages como dependência
-  // Get background gradient based on current phase
+  }, [isMounted, messages]); 
   const getBackgroundGradient = () => {
     const gradients = [
       "bg-gradient-to-br from-pink-400 via-purple-300 to-indigo-400",
@@ -135,11 +126,8 @@ export default function Celebration() {
     
     return `${gradients[currentPhase]} transition-colors duration-3000`;
   };
-  // Corrigido: Animações de fundo mais leves e estáveis
   return (
     <div className={`min-h-screen flex flex-col items-center justify-center text-center p-4 relative overflow-hidden ${getBackgroundGradient()}`}>
-      {/* Removed canvas for confetti */}
-      {/* Floating hearts com animação simplificada */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         {isMounted && hearts.slice(0, 10).map((heart) => (
           <motion.div
@@ -160,7 +148,7 @@ export default function Celebration() {
             transition={{ 
               duration: heart.animationDuration,
               delay: heart.delay,
-              repeat: 1, // Limitado a uma repetição
+              repeat: 1, 
               ease: "linear"
             }}
           >
@@ -168,8 +156,6 @@ export default function Celebration() {
           </motion.div>
         ))}
       </div>
-      {/* Resto do código... */}
-      {/* Animated bubbles - reduzido e simplificado */}
       <div className="absolute inset-0 overflow-hidden">
         {Array.from({ length: 3 }).map((_, i) => (
           <motion.div
@@ -206,11 +192,10 @@ export default function Celebration() {
             animate={{ 
               scale: [0, 1.2, 0],
               opacity: [0, 1, 0]
-              // Removed complex filter animations
             }}
             transition={{ 
-              duration: 1.5, // Reduced from 2+random
-              delay: Math.random() * 3, // Reduced max delay
+              duration: 1.5,
+              delay: Math.random() * 3, 
               ease: "easeOut"
             }}
           >
@@ -220,21 +205,16 @@ export default function Celebration() {
                 width: `${firework.size}px`,
                 height: `${firework.size}px`,
                 background: firework.color
-                // Removed complex box-shadow
               }}
             />
           </motion.div>
         ))}
       </AnimatePresence>
-      {/* Romantic background elements - removed some elements for performance */}
       {isMounted && (
         <>
           <div className="absolute inset-0 bg-pink-100/10 backdrop-blur-sm"></div>
-          {/* Removed heart pattern background */}
-          
-          {/* Animated bubbles - reduced count */}
-          <div className="absolute inset-0 overflow-hidden">
-            {Array.from({ length: 5 }).map((_, i) => ( // Reduced from 15 to 5
+                    <div className="absolute inset-0 overflow-hidden">
+            {Array.from({ length: 5 }).map((_, i) => ( 
               <motion.div
                 key={`bubble-${i}`}
                 className="absolute rounded-full bg-white/20 backdrop-blur-sm"
@@ -245,11 +225,11 @@ export default function Celebration() {
                   top: `${Math.random() * 100}%`,
                 }}
                 animate={{
-                  y: [0, -10, 0], // Reduced movement
-                  scale: [1, 1.05, 1], // Reduced scale change
+                  y: [0, -10, 0], 
+                  scale: [1, 1.05, 1], 
                 }}
                 transition={{
-                  duration: 5 + Math.random() * 3, // Reduced max duration
+                  duration: 5 + Math.random() * 3,
                   repeat: Infinity,
                   ease: "easeInOut",
                 }}
@@ -258,7 +238,6 @@ export default function Celebration() {
           </div>
         </>
       )}
-      {/* Main content */}
       <AnimatePresence>
         {isMounted && showMessage && (
           <motion.div 
@@ -268,7 +247,6 @@ export default function Celebration() {
             className="z-10 max-w-3xl relative"
           >
             <div className="backdrop-blur-md bg-white/10 p-10 rounded-2xl shadow-xl border border-pink-300/30 overflow-hidden">
-              {/* Decorative corner elements */}
               <div className="absolute top-0 left-0 w-20 h-20 border-t-4 border-l-4 border-pink-400/70 rounded-tl-xl"></div>
               <div className="absolute top-0 right-0 w-20 h-20 border-t-4 border-r-4 border-pink-400/70 rounded-tr-xl"></div>
               <div className="absolute bottom-0 left-0 w-20 h-20 border-b-4 border-l-4 border-pink-400/70 rounded-bl-xl"></div>
@@ -276,7 +254,7 @@ export default function Celebration() {
               
               <motion.div 
                 initial={{ scale: 0.5 }}
-                animate={{ scale: [1, 1.05, 1] }} // Reduced scale animation
+                animate={{ scale: [1, 1.05, 1] }} 
                 transition={{ duration: 3, repeat: Infinity, repeatType: "reverse" }}
                 className="text-white text-6xl font-bold mb-6 drop-shadow-lg"
               >
@@ -302,16 +280,15 @@ export default function Celebration() {
                 e seu amor aquece meu coração.
               </motion.p>
               
-              {/* Animated love messages - simplified */}
               <div className="h-20 overflow-hidden relative my-8 border-t border-b border-pink-300/30 py-4">
                 <AnimatePresence mode="wait">
                   {loveMessages.map((message) => (
                     <motion.div
                       key={message.id}
-                      initial={{ opacity: 0, y: 20 }} // Reduced movement
+                      initial={{ opacity: 0, y: 20 }} 
                       animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -20 }} // Reduced movement
-                      transition={{ duration: 0.8 }} // Reduced duration
+                      exit={{ opacity: 0, y: -20 }}
+                      transition={{ duration: 0.8 }} 
                       className={`text-xl text-pink-200 italic absolute inset-0 flex items-center justify-center ${
                         message.id === currentPhase % loveMessages.length ? 'block' : 'hidden'
                       }`}
@@ -336,13 +313,12 @@ export default function Celebration() {
                       "0 0 7px rgba(255,105,180,0.6)"
                     ]
                   }}
-                  transition={{ duration: 3, repeat: Infinity }} // Slowed down
+                  transition={{ duration: 3, repeat: Infinity }} 
                 >
                   Agora somos oficialmente namorados!
                 </motion.span>
               </motion.div>
               
-              {/* Simplified heart animations */}
               <div className="mt-8 flex justify-center space-x-8">
                 <motion.div 
                   animate={{ scale: [1, 1.1, 1] }}
@@ -379,9 +355,8 @@ export default function Celebration() {
           </motion.div>
         )}
       </AnimatePresence>
-      {/* Animated rings - reduced count and complexity */}
       <div className="fixed inset-0 pointer-events-none">
-        {Array.from({ length: 2 }).map((_, i) => ( // Reduced from 3 to 2
+        {Array.from({ length: 2 }).map((_, i) => ( 
           <motion.div
             key={`ring-${i}`}
             className="absolute rounded-full border-2 border-pink-300/30"
@@ -394,12 +369,12 @@ export default function Celebration() {
             initial={{ opacity: 0, x: '-50%', y: '-50%', scale: 0.8 }}
             animate={{ 
               opacity: [0, 0.4, 0],
-              scale: [0.9, 1.1, 1.3], // Reduced scale animation
+              scale: [0.9, 1.1, 1.3], 
               x: '-50%',
               y: '-50%'
             }}
             transition={{
-              duration: 6, // Increased from 4 to slow down
+              duration: 6, 
               delay: i * 2,
               repeat: Infinity,
               ease: "easeInOut"
@@ -407,24 +382,23 @@ export default function Celebration() {
           />
         ))}
       </div>
-      {/* Animated stars - reduced count */}
       <div className="fixed inset-0 pointer-events-none">
-        {Array.from({ length: 10 }).map((_, i) => ( // Reduced from 20 to 10
+        {Array.from({ length: 10 }).map((_, i) => ( 
           <motion.div
             key={`star-${i}`}
             className="absolute text-yellow-200"
             style={{
               left: `${Math.random() * 100}%`,
               top: `${Math.random() * 100}%`,
-              fontSize: `${Math.random() * 0.8 + 0.5}rem`, // Reduced max size
+              fontSize: `${Math.random() * 0.8 + 0.5}rem`, 
             }}
             initial={{ opacity: 0 }}
             animate={{ 
               opacity: [0, 0.7, 0],
-              scale: [0.8, 1.1, 0.8], // Reduced scale change
+              scale: [0.8, 1.1, 0.8], 
             }}
             transition={{
-              duration: 3 + Math.random() * 2, // Reduced max duration
+              duration: 3 + Math.random() * 2, 
               delay: Math.random() * 5,
               repeat: Infinity,
               ease: "easeInOut"
@@ -434,7 +408,6 @@ export default function Celebration() {
           </motion.div>
         ))}
       </div>
-      {/* Bottom message */}
       <AnimatePresence>
         {isMounted && showMessage && (
           <motion.div
@@ -453,7 +426,7 @@ export default function Celebration() {
                       "0 0 5px rgba(255,105,180,0.6)"
                     ]
                   }}
-                  transition={{ duration: 3, repeat: Infinity }} // Slowed down
+                  transition={{ duration: 3, repeat: Infinity }} 
                 >
                   Feliz Início de Namoro! ❤️
                 </motion.span>
