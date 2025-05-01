@@ -30,3 +30,7 @@ O projeto foi desenvolvido com foco em experiência mobile-first, garantindo que
 git clone https://github.com/gustavofvs/carta-de-namoro.git
 cd carta-de-namoro
 ```
+
+💡 Créditos: Criado 100% com o poder da IA — Claude 3.5
+
+
